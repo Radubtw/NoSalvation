@@ -71,7 +71,7 @@ void Player::update(bool& isJumping)
 		{
 			if (this->y_velocity > 0)
 				this->y_velocity = 0;
-			this->y_velocity -= 1.0f;
+			this->y_velocity -= 0.5f;
 			this->coords.y += this->y_velocity;
 			rectangle.setPosition(coords);
 			isJumping = true;
@@ -109,7 +109,7 @@ void Player::update(bool& isJumping)
 		isJumping = false;
 	if (this->getYcoord() < 550 && isJumping)
 	{
-		this->setYvelocity(this->getYvelocity() + 0.005f);
+		this->setYvelocity(this->getYvelocity() + 0.001f);
 		this->coords.y += this->y_velocity;
 		rectangle.setPosition(coords);
 	}
@@ -120,5 +120,4 @@ void Player::update(bool& isJumping)
 void Player::draw(sf::RenderWindow& window)
 {
 	window.draw(rectangle);
-
 }

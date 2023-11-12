@@ -24,6 +24,7 @@
     <ProjectGuid>{bb344cf3-18c6-4294-a32d-7c419a4ea70b}</ProjectGuid>
     <RootNamespace>testSFML</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>PlatformerGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
