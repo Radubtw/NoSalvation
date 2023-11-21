@@ -4,6 +4,8 @@
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
 #include<SFML/Config.hpp>
+#include "Collider.h"
+#include "Platform.h"
 
 
 
@@ -13,7 +15,8 @@ private:
 	float y_velocity;
 	float x_velocity;
 	sf::Vector2f coords;
-	sf::RectangleShape rectangle;	
+	sf::RectangleShape rectangle;
+	Collider collider;
 
 
 public:
@@ -29,8 +32,9 @@ public:
 	float getYvelocity();
 	float getXvelocity();
 	void setYvelocity(float);
-	void setXvelocity();
+	void setXvelocity(float);
+	Collider& getCollider();
 
-	void update(bool&);
+	void update(bool&, const std::vector<Platform>&, float);
 };
 
