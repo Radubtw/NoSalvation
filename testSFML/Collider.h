@@ -59,11 +59,20 @@ public:
     }
 
     sf::Vector2f GetSize() const {
-        return body.getSize();
+        return sf::Vector2f(body.getSize().x, body.getSize().y);
     }
 
     sf::Vector2f GetHalfSize() const {
-        return body.getSize() / 2.0f;
+        sf::FloatRect rect = body.getLocalBounds();
+        return sf::Vector2f(rect.width / 2.0f, rect.height / 2.0f);
+    }
+
+    sf::RectangleShape GetDebugShape() const {
+        sf::RectangleShape debugShape = body;
+        debugShape.setFillColor(sf::Color::Transparent);
+        debugShape.setOutlineColor(sf::Color::Red);
+        debugShape.setOutlineThickness(1.0f);
+        return debugShape;
     }
 };
 

@@ -7,9 +7,17 @@ Player::Player() : collider(rectangle)
 	x_velocity = 0.0f;
 	y_velocity = 0.0f;
 
-	rectangle.setSize(sf::Vector2f(50.0f, 50.0f));
+	rectangle.setSize(sf::Vector2f(75.0f, 75.0f));
 	rectangle.setPosition(coords);
-	rectangle.setFillColor(sf::Color::Green);
+	rectangle.setFillColor(sf::Color::White);
+
+    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\things\\images\\player.png"))
+    {
+        std::cout << "Failed to load from file!";
+    }
+    rectangle.setTexture(&texture);
+    
+
 }
 
  Player::Player(sf::Vector2f position): y_velocity(0.0f), x_velocity(0.0f), coords(position), rectangle(sf::Vector2f(50.0f, 50.0f)), collider(rectangle) {
@@ -53,103 +61,11 @@ Collider& Player::getCollider()
 	return collider;
 }
 
-//void Player::update(bool& isOnGround, std::vector<Platform> platforms)
-//{
-//
-//
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-//		if (this->coords.y < 600 - 50)
-//		{
-//			if (this->y_velocity < 0)
-//				this->y_velocity = 0;
-//			this->y_velocity += 0.0001f;
-//			this->coords.y += this->y_velocity;
-//			rectangle.setPosition(coords);
-//		}
-//		else y_velocity = 0.0f;
-//
-//
-//	}
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && (isOnGround)) {
-//		if (this->coords.y > 0)
-//		{
-//			if (this->y_velocity > 0)
-//				this->y_velocity = 0;
-//			this->y_velocity -= 0.5f;
-//			this->coords.y += this->y_velocity;
-//			rectangle.setPosition(coords);
-//			isOnGround = false;
-//		}
-//		else y_velocity = 0.0f;
-//
-//	}
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-//		if (this->coords.x > 0)
-//		{
-//			if (this->x_velocity > 0)
-//				this->x_velocity = 0;
-//			this->x_velocity -= 0.0001f;
-//			this->coords.x += this->x_velocity;
-//			rectangle.setPosition(coords);
-//		}
-//		else x_velocity = 0.0f;
-//
-//	}
-//
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-//		if (this->coords.x < 800 - 50)
-//		{
-//			if (this->x_velocity < 0)
-//				this->x_velocity = 0;
-//			this->x_velocity += 0.0001f;
-//			this->coords.x += this->x_velocity;
-//			rectangle.setPosition(coords);
-//
-//		}
-//		else x_velocity = 0.0f;
-//
-//	}
-//	if (this->coords.y > 550)
-//		isOnGround = true;
-//	if (this->getYcoord() < 550 && !isOnGround)
-//	{
-//		this->setYvelocity(this->getYvelocity() + 0.001f);
-//		this->coords.y += this->y_velocity;
-//		rectangle.setPosition(coords);
-//	}
-//
-//		/*for (auto& platform : platforms) {
-//			if (collider.CheckCollision(platform.GetCollider(), 0.0f))
-//			{
-//				isOnGround = true;
-//				this->setYvelocity(0.0f);
-//				rectangle.setPosition(rectangle.getPosition().x, platform.GetCollider().GetPosition().y - rectangle.getSize().y / 2.0f);
-//
-//			}
-//			else if (this->coords.y < 550)
-//				isOnGround = false;
-//				
-//		}*/
-//
-//	for (const auto& platform : platforms) {
-//		const Collider& platformCollider = platform.GetCollider();
-//
-//		if (collider.CheckCollision(const_cast<Collider&>(platformCollider), 0.0f)) {
-//			isOnGround = true;
-//
-//			y_velocity = 0.0f;
-//
-//			coords.y = platformCollider.GetPosition().y - rectangle.getSize().y / 2.0f;
-//		}
-//	}
-//
-//}
-
 void Player::update(bool& onGround, const std::vector<Platform>& platforms, float deltaTime) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         x_velocity = -10.0f;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         x_velocity = 10.0f; 
     }
     else {
@@ -157,7 +73,7 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
     }
 
     if (onGround && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        y_velocity = -50.0f;
+        y_velocity = -70.0f;
         onGround = false; 
     }
 
@@ -165,7 +81,6 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
     coords.x += x_velocity * deltaTime; 
     coords.y += y_velocity * deltaTime; 
 
-    
     collider.Move(x_velocity * deltaTime, y_velocity * deltaTime);
 
     for (const auto& platform : platforms) {
@@ -173,12 +88,13 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
         if (collider.CheckCollision(const_cast<Collider&>(platformCollider), 0.0f)) {
             onGround = true;
             y_velocity = 0.0f; 
-            coords.y = platformCollider.GetPosition().y - collider.GetSize().y / 2.0f;
+            coords.y = platformCollider.GetPosition().y - collider.GetHalfSize().y ;
         }
     }
 }
 
 void Player::draw(sf::RenderWindow & window)
 {
-	window.draw(rectangle);
+    window.draw(rectangle);
+	
 }

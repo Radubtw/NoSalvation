@@ -16,6 +16,7 @@ private:
 	float x_velocity;
 	sf::Vector2f coords;
 	sf::RectangleShape rectangle;
+	sf::Texture texture;
 	Collider collider;
 
 
