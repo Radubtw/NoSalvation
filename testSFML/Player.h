@@ -19,6 +19,9 @@ private:
 	sf::Texture texture;
 	Collider collider;
 
+public:
+	int score;
+
 
 public:
 	Player();

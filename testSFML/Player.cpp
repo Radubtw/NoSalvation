@@ -6,12 +6,13 @@ Player::Player() : collider(rectangle)
 	coords.y = 500.f;
 	x_velocity = 0.0f;
 	y_velocity = 0.0f;
+    score = 0;
 
 	rectangle.setSize(sf::Vector2f(75.0f, 75.0f));
 	rectangle.setPosition(coords);
 	rectangle.setFillColor(sf::Color::White);
 
-    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\things\\images\\player.png"))
+    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player.png"))
     {
         std::cout << "Failed to load from file!";
     }
@@ -23,6 +24,7 @@ Player::Player() : collider(rectangle)
  Player::Player(sf::Vector2f position): y_velocity(0.0f), x_velocity(0.0f), coords(position), rectangle(sf::Vector2f(50.0f, 50.0f)), collider(rectangle) {
         rectangle.setPosition(position);
         rectangle.setFillColor(sf::Color::Green);
+        score = 0;
 
     }
 float Player::getXcoord()
