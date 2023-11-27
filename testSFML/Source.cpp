@@ -10,46 +10,67 @@
 #define WindowLength  800;
 
 std::vector<Platform> platform_generation(std::vector<Platform>);
-float randomFloat();
+float randomFloatX();
+float randomFloatY();
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800,600), "No Salvation");
-    float dt = 0.02f;
+
+    Menu main_menu;
+    
+
+    sf::RenderWindow window(sf::VideoMode(1920,1080), "No Salvation");
+    float dt = 0.03f;
     bool onGround = false;
     Player player;
     std::vector<Enemy> enemies;
     std::vector<Platform> platforms;
    
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(200.0f, 400.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(300.0f, 400.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(0.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(57.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(113.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(169.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(225.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(281.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(337.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(393.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(449.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(505.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(561.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(617.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(673.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(729.0f, 543.0f)));
-    platforms.push_back(Platform(sf::Vector2f(60.0f, 60.0f), sf::Vector2f(785.0f, 543.0f)));
-    // platforms.push_back(Platform(sf::Vector2f(120.0f, 50.0f), sf::Vector2f(650.0f, 450.0f)));
-    platforms.push_back(Platform(sf::Vector2f(4000.0f, 50.0f), sf::Vector2f(-1000.0f, 590.0f)));
-    //platforms.push_back(Platform(sf::Vector2f(50.0f, 1000.0f), sf::Vector2f(750.0f, 0.0f)));
-    //platforms = platform_generation(platforms);
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(200.0f, 600.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(600.0f, 700.0f)));
+    //floor
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(0.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(96.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(192.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(288.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(384.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(480.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(576.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(672.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(768.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(864.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(960.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1056.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1152.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1248.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1344.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1440.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1536.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1632.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1728.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(1824.0f, 990.0f)));
+    platforms.push_back(Platform(sf::Vector2f(96.0f, 96.0f), sf::Vector2f(11920.0f, 990.0f)));
+    //floor
+
+    sf::Texture floor_placeholder;
+    if (!floor_placeholder.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\Floor2.png"))
+    {
+        std::cout << "Failed to load from file";
+    }
+    floor_placeholder.setRepeated(true);
+    sf::Sprite floor_placeholder_Sprite;
+
+    floor_placeholder_Sprite.setTexture(floor_placeholder);
+    floor_placeholder_Sprite.setScale(0, 0);
 
     sf::Texture background;
     if (!background.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\background2.png"))
     {
         std::cout << "Failed to load from file";
     }
-    background.setSmooth(true);
+    background.setRepeated(true);
     sf::Sprite backgroundSprite;
+
     backgroundSprite.setTexture(background);
-    backgroundSprite.setScale(2.6f, 1.7f);
+    backgroundSprite.setScale(7, 3);
 
     sf::Font font_scor;
     if (!font_scor.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\ASTERU.ttf"))
@@ -60,8 +81,8 @@ int main() {
 
     text.setFont(font_scor); 
     text.setString("SCORE: 0");
-    text.setCharacterSize(24); 
-    text.setPosition(600, 50);
+    text.setCharacterSize(32); 
+    text.setPosition(1700, 50);
     text.setFillColor(sf::Color::Magenta);
     text.setStyle(sf::Text::Bold);
     enemies.push_back(Enemy(sf::Vector2f(400.0f, 450.0f)));
@@ -79,17 +100,27 @@ int main() {
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
-                window.close();
+                main_menu.setPlayButton0();
             }
         }
         //std::cout << sf::Mouse::getPosition(window).x<<std::endl;
-      //  std::cout << player.getXcoord() << std::endl;
-     
+        //std::cout << player.getXcoord() << std::endl;
+        while (!main_menu.game_start(window))
+        {
+            if (main_menu.game_exit(window))
+            {
+                window.close();
+            }
+            window.clear();
+            main_menu.draw(window);
+            window.display();
+        }
+
         if (enemies[0].enemy_count < 4)
         {
             int check = 1;
-            float enemy_x = randomFloat();
-            float enemy_y = randomFloat();
+            float enemy_x = randomFloatX();
+            float enemy_y = randomFloatY();
             for (auto& platform : platforms)
             {
                 if (enemy_x < platform.getPosition().x - platform.getSize().x || enemy_x > platform.getPosition().x + platform.getSize().x)
@@ -121,24 +152,28 @@ int main() {
 
             window.clear();
             window.draw(backgroundSprite);
-            window.draw(text);
+            window.draw(floor_placeholder_Sprite);
+            
+            for (auto& platform : platforms) {
+                platform.Draw(window);
+            }
             player.draw(window);
 
             for (int i = 0; i < enemies.size(); i++)
             {
                 enemies[i].draw(window);
-                if (enemies[i].checkIfDead(window))
+                if (enemies[i].checkIfDead(window, player))
                 {
                     enemies.erase(enemies.begin() + i);
                     player.score++;
                     std::cout <<std::endl<< "Score: " << player.score<<std::endl;
-
                 }
-               
             }
-            for (auto& platform : platforms) {
-                platform.Draw(window);
-            }
+
+            
+
+            window.draw(text);
+            
             player.update(onGround, platforms, dt);
 
             window.display();
@@ -147,11 +182,18 @@ int main() {
     return 0;
 }
 
-float randomFloat()
+float randomFloatX()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist(0, 540);
+    std::uniform_real_distribution<> dist(0, 1800);
+    return dist(gen);
+}
+float randomFloatY()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dist(0, 1000);
     return dist(gen);
 }
 

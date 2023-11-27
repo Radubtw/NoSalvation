@@ -8,11 +8,11 @@ Player::Player() : collider(rectangle)
 	y_velocity = 0.0f;
     score = 0;
 
-	rectangle.setSize(sf::Vector2f(75.0f, 75.0f));
+	rectangle.setSize(sf::Vector2f(140.0f, 140.0f));
 	rectangle.setPosition(coords);
 	rectangle.setFillColor(sf::Color::White);
-
-    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player.png"))
+    rectangle.setScale(1.2, 1.2);
+    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player3.png"))
     {
         std::cout << "Failed to load from file!";
     }

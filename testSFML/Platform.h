@@ -23,10 +23,10 @@ public:
         {
             std::cout << "Failed to load texture";
         }
-        platform_texture.setRepeated(true);
-        platform_sprite.setTexture(platform_texture);
-        platform_sprite.setScale(0.06f, 0.06f);
-        platform_sprite.setPosition(position);
+        //platform_texture.setRepeated(true);
+        body.setTexture(&platform_texture);
+       // body.setScale(0.1f, 0.1f);
+        body.setPosition(position);
         
     }
 
@@ -47,7 +47,7 @@ public:
         return body.getSize();
     }
     void Draw(sf::RenderWindow& window) {
-        window.draw(platform_sprite);
+        window.draw(body);
         
     }
 };

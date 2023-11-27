@@ -7,6 +7,7 @@ private:
 	sf::Vector2f coords;
 	sf::RectangleShape enemyShape;
 	sf::Texture enemy_texture;
+	sf::Sprite enemySprite;
 
 public:
 	Enemy();
@@ -14,7 +15,7 @@ public:
 	static int enemy_count;
 	sf::Vector2f getPosition();
 	sf::Vector2f getSize();
-	bool checkIfDead(sf::RenderWindow& window);
+	bool checkIfDead(sf::RenderWindow& window, Player player);
 	void draw(sf::RenderWindow& window);
 };
  //int Enemy::enemy_count = 0;
