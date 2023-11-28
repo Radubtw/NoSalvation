@@ -17,7 +17,8 @@ public:
         body.setSize(size);
         body.setFillColor(sf::Color::White);
 
-       platform_texture.setRepeated(true);
+        platform_texture.setRepeated(true);
+        body.setOrigin(body.getSize().x / 2.0f, body.getSize().y / 2.0f + 30.0f);
 
         if (!platform_texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\Floor2.png"))
         {
@@ -25,8 +26,7 @@ public:
         }
         //platform_texture.setRepeated(true);
         body.setTexture(&platform_texture);
-       // body.setScale(0.1f, 0.1f);
-        body.setPosition(position);
+        //body.setPosition(position);
         
     }
 

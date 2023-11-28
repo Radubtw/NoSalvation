@@ -10,11 +10,13 @@ Enemy::Enemy()
 	enemyShape.setPosition(coords);
 	enemy_count++;
 
-	if (!enemy_texture.loadFromFile("aku.png"))
+	if (!enemy_texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\enemy.png"))
 	{
 		std::cout << "Failed to load from file!";
 	}
-	enemySprite.setTexture(enemy_texture);
+	enemyShape.setTexture(&enemy_texture);
+	enemyShape.setScale(1.0f, 1.0f);
+
 }
 
 Enemy::Enemy(sf::Vector2f coords)
@@ -26,8 +28,9 @@ Enemy::Enemy(sf::Vector2f coords)
 	enemyShape.setFillColor(sf::Color::Red);
 	enemyShape.setPosition(coords);
 	enemy_count++;
+	enemyShape.setScale(1.0f, 1.0f);
 
-	if (!enemy_texture.loadFromFile("C:/Users/Radu/source/repos/testSFML/x64/Debug/aku.png"))
+	if (!enemy_texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\enemy.png"))
 	{
 		std::cout << "Failed to load from file!";
 	}
@@ -48,18 +51,35 @@ sf::Vector2f Enemy::getSize()
 }
 bool Enemy::checkIfDead(sf::RenderWindow& window, Player player)
 {
+
 	sf::Vertex vertices[] =
 	{
-		sf::Vertex(sf::Vector2f(player.getXcoord(), player.getYcoord()), sf::Color::Green, sf::Vector2f(100,  10)),
-		sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y), sf::Color::Green, sf::Vector2f(100, 10)),
+		sf::Vertex(sf::Vector2f(player.getXcoord() + 50.0f, player.getYcoord() - 70.0f), sf::Color::Green, sf::Vector2f(100.0f,  10.0f)),
+		sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y), sf::Color::Green, sf::Vector2f(100.0f, 10.0f)),
+		sf::Vertex(sf::Vector2f(player.getXcoord() + 50.0f, player.getYcoord() - 71.0f), sf::Color::Green, sf::Vector2f(100.0f,  10.0f)),
+		sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y-1), sf::Color::Green, sf::Vector2f(100.0f, 10.0f)),
 
+	};
+	sf::Vertex vertices2[]=
+	{
+
+	sf::Vertex(sf::Vector2f(player.getXcoord() - 50.0f, player.getYcoord() - 70.0f), sf::Color::Green, sf::Vector2f(100.0f,  10.0f)),
+	sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y), sf::Color::Green, sf::Vector2f(100.0f, 10.0f)),
+	sf::Vertex(sf::Vector2f(player.getXcoord() - 50.0f, player.getYcoord() - 71.0f), sf::Color::Green, sf::Vector2f(100.0f,  10.0f)),
+	sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y-1), sf::Color::Green, sf::Vector2f(100.0f, 10.0f)),
 	};
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		float mouse_x = sf::Mouse::getPosition(window).x;
 		float mouse_y = sf::Mouse::getPosition(window).y;
-		window.draw(vertices, 2, sf::LinesStrip);
-
+		if (player.getFacingRight())
+		{
+			window.draw(vertices, 4, sf::LinesStrip);
+		}
+		else
+		{
+			window.draw(vertices2, 4, sf::LinesStrip);
+		}
 		if (mouse_x > coords.x && mouse_x < coords.x + enemyShape.getSize().x)
 		{
 			if (mouse_y > coords.y && mouse_y < coords.y + enemyShape.getSize().y)
@@ -74,10 +94,7 @@ bool Enemy::checkIfDead(sf::RenderWindow& window, Player player)
 
 void Enemy::draw(sf::RenderWindow& window)
 {
-	if (isDead == 0)
-	{
-		window.draw(enemyShape);
-	}
+	window.draw(enemyShape);
 }
 
 

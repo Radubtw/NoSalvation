@@ -7,10 +7,12 @@ Player::Player() : collider(rectangle)
 	x_velocity = 0.0f;
 	y_velocity = 0.0f;
     score = 0;
-
-	rectangle.setSize(sf::Vector2f(140.0f, 140.0f));
+    facing_right = 0;
+    rectangle.setSize(sf::Vector2f(180.0f, 160.0f));
 	rectangle.setPosition(coords);
 	rectangle.setFillColor(sf::Color::White);
+    rectangle.setOrigin(rectangle.getSize().x / 2.0f, rectangle.getSize().y / 2.0f);
+
     rectangle.setScale(1.2, 1.2);
     if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player3.png"))
     {
@@ -68,7 +70,7 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
         x_velocity = -10.0f;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        x_velocity = 10.0f; 
+        x_velocity = 10.0f;
     }
     else {
         x_velocity = 0.0f; 
@@ -78,7 +80,16 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
         y_velocity = -70.0f;
         onGround = false; 
     }
-
+    if (x_velocity > 0.0f)
+    {
+        facing_right = 1;
+        rectangle.setScale(-1.2f, 1.2f);
+    }
+    else if(x_velocity < 0.0f)
+    {
+        facing_right = 0;
+        rectangle.setScale(1.2f, 1.2f);
+    }
     y_velocity += 10.0f * deltaTime; 
     coords.x += x_velocity * deltaTime; 
     coords.y += y_velocity * deltaTime; 
@@ -93,6 +104,11 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
             coords.y = platformCollider.GetPosition().y - collider.GetHalfSize().y ;
         }
     }
+}
+
+bool Player::getFacingRight()
+{
+    return facing_right;
 }
 
 void Player::draw(sf::RenderWindow & window)

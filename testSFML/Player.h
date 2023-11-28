@@ -18,7 +18,7 @@ private:
 	sf::RectangleShape rectangle;
 	sf::Texture texture;
 	Collider collider;
-
+	bool facing_right;
 public:
 	int score;
 
@@ -37,6 +37,7 @@ public:
 	float getXvelocity();
 	void setYvelocity(float);
 	void setXvelocity(float);
+	bool getFacingRight();
 	Collider& getCollider();
 
 	void update(bool&, const std::vector<Platform>&, float);
