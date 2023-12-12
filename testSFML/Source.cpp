@@ -1,23 +1,27 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include"Player.h"
 #include"Enemy.h"
 #include"Collider.h"
 #include"Platform.h"
 #include"Menu.h"
-#include<Windows.h>
+#include <Windows.h>
 #include <random>
 
 
-int WIN_SCORE = 25;
+int WIN_SCORE = 50;
+int MAX_ENEMIES = 4;
 
 float randomFloatX();
 float randomFloatY();
 int main() {
-
     Menu main_menu;
     
 
     sf::RenderWindow window(sf::VideoMode(1920,1080), "No Salvation", sf::Style::Fullscreen);
-    float dt = 0.03f;
+    float dt = 0.05f;
     bool onGround = false;
     Player player;
     std::vector<Enemy> enemies;
@@ -74,39 +78,35 @@ int main() {
     backgroundSprite.setTexture(background);
     backgroundSprite.setScale(7, 3);
 
-    sf::Texture enemy_placeholder;
-    if (!enemy_placeholder.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\enemy.png"))
-    {
-        std::cout << "Failed to load from file";
-    }
-    
-
-    sf::Texture enemy_placeholder2;
-    if (!enemy_placeholder2.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\enemy.png"))
-    {
-        std::cout << "Failed to load from file";
-    }
-    //enemy_placeholder2.setRepeated(true);
-
     sf::Font font;
     if (!font.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\ASTERU.ttf"))
     {
         std::cout << "failed to load from file";
     }
-    sf::Text text;
-
-    text.setFont(font); 
-    text.setString("SCORE: 0");
-    text.setCharacterSize(32); 
-    text.setPosition(1700, 50);
-    text.setFillColor(sf::Color::Magenta);
-    text.setStyle(sf::Text::Bold);
-
-    Enemy inamic(sf::Vector2f(600.0f, 600.0f));
+    sf::Text score_text;
     
-    enemies.emplace_back(inamic);
+    score_text.setFont(font);
+    score_text.setString("SCORE: 0");
+    score_text.setCharacterSize(32);
+    score_text.setPosition(1700, 50);
+    score_text.setFillColor(sf::Color::Magenta);
+    score_text.setStyle(sf::Text::Bold);
 
+    sf::Text health_text;
 
+    health_text.setFont(font);
+    health_text.setString("Health: ");
+    health_text.setCharacterSize(32);
+    health_text.setPosition(50, 50);
+    health_text.setFillColor(sf::Color::Red);
+    health_text.setStyle(sf::Text::Bold);
+
+    Enemy inamic(sf::Vector2f(1200.0f, 600.0f));
+    
+     enemies.emplace_back(inamic);
+
+    bool ok20 = false;
+    bool ok40 = false;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -120,6 +120,8 @@ int main() {
                 main_menu.setPlayButton0();
             }
         }
+        SetCursor(LoadCursor(nullptr, IDC_CROSS));
+
         //std::cout << sf::Mouse::getPosition(window).x<<std::endl;
         //std::cout << player.getXcoord() << std::endl;
         while (!main_menu.game_start(window))
@@ -133,44 +135,57 @@ int main() {
             main_menu.draw(window);
             window.display();
         }
-        
-        if (enemies[0].enemy_count < 4)
+
+        if (player.score == 20 && !ok20)
+        {
+            ok20 = true;
+            MAX_ENEMIES++;
+        }
+        if (player.score == 40 && !ok40)
+        {
+            ok40 = true;
+            MAX_ENEMIES++;
+        }
+        if (enemies.empty() || enemies.size() < MAX_ENEMIES)
         {
             int check = 1;
             float enemy_x = randomFloatX();
             float enemy_y = randomFloatY();
-            for (auto& platform : platforms)
+            if (abs(player.getXcoord() - enemy_x) > 150 && abs(player.getYcoord() - enemy_y) > 150)
             {
-                if (enemy_x < platform.getPosition().x - platform.getSize().x || enemy_x > platform.getPosition().x + platform.getSize().x)
+                for (auto& platform : platforms)
                 {
-                    if (enemy_y < platform.getPosition().y - platform.getSize().y || enemy_y > platform.getPosition().y + platform.getSize().y)
+                    if (enemy_x < platform.getPosition().x - platform.getSize().x || enemy_x > platform.getPosition().x + platform.getSize().x)
                     {
-                        check++;
+                        if (enemy_y < platform.getPosition().y - platform.getSize().y || enemy_y > platform.getPosition().y + platform.getSize().y)
+                        {
+                            check++;
+                        }
                     }
                 }
-            }
-            for (auto& enemy : enemies)
-            {
-                if (enemy_x < enemy.getPosition().x - enemy.getSize().x || enemy_x > enemy.getPosition().x + enemy.getSize().x)
+                for (auto& enemy : enemies)
                 {
-                    if (enemy_y < enemy.getPosition().y - enemy.getSize().y || enemy_y > enemy.getPosition().y + enemy.getSize().y)
+                    if (enemy_x < enemy.getPosition().x - enemy.getSize().x || enemy_x > enemy.getPosition().x + enemy.getSize().x)
                     {
-                        check++;
+                        if (enemy_y < enemy.getPosition().y - enemy.getSize().y || enemy_y > enemy.getPosition().y + enemy.getSize().y)
+                        {
+                            check++;
+                        }
                     }
                 }
-            }
-            if (check == enemies.size() + platforms.size() - 2)
-            {
-                Enemy inamic(sf::Vector2f(enemy_x, enemy_y));
+                if (check == enemies.size() + platforms.size() - 2) //|| enemies.size() <MAX_ENEMIES)
+                {
+                    Enemy inamic(sf::Vector2f(enemy_x, enemy_y));
 
-                enemies.emplace_back(inamic);
+                    enemies.emplace_back(inamic);
+                }
             }
            // std::cout << enemies.size() + platforms.size() <<std::endl;
             
         }
        
-        text.setString("SCORE: " + std::to_string(player.score));
-
+        score_text.setString("SCORE: " + std::to_string(player.score));
+        health_text.setString("HEALTH: " + std::to_string(player.health));
 
             window.clear();
             window.draw(backgroundSprite);
@@ -185,26 +200,28 @@ int main() {
             for (int i = 0; i < enemies.size(); i++)
             {
                 enemies[i].draw(window);
+
                 if (enemies[i].checkIfDead(window, player))
                 {
-                    enemies.erase(enemies.begin() + i);
                     player.score++;
+                    enemies.erase(enemies.begin() + i);
                     std::cout <<std::endl<< "Score: " << player.score<<std::endl;
+                }
+                else if (enemies[i].getDamageDealt())
+                {
+                    enemies.erase(enemies.begin() + i);
                 }
             }
 
-           /* enemies.erase(std::remove_if(enemies.begin(), enemies.end(), [&]( Enemy& enemy) {
-                enemy.draw(window);
-            if (enemy.checkIfDead(window, player)) {
-                player.score++;
-                std::cout << std::endl << "Score: " << player.score << std::endl;
-                return true; 
+            for (int i = 0; i < enemies.size(); i++)
+            {
+                enemies[i].update(player, dt);
+                enemies[i].setTexture();
             }
-            return false; 
-                }), enemies.end());*/
-
+           
             
-            window.draw(text);
+            window.draw(score_text);
+            window.draw(health_text);
             
             player.update(onGround, platforms, dt);
 
@@ -213,18 +230,39 @@ int main() {
                 sf::Text text_win;
 
                 text_win.setFont(font);
-                text_win.setString("YOU WON!");
+                text_win.setString("YOU WON!\nSCORE: " + std::to_string(player.score) + "\nHEALTH: " + std::to_string(player.health));
                 text_win.setCharacterSize(64);
-                text_win.setPosition(800, 400);
+                text_win.setPosition(750, 400);
                 text_win.setFillColor(sf::Color::Blue);
                 text_win.setStyle(sf::Text::Bold);
                 window.clear();
                 window.draw(text_win);
                 window.display();
                 Sleep(3000);
-                window.close();
+                player.score = 0;
+                player.health = 5;
+                MAX_ENEMIES = 4;
+                main_menu.setPlayButton0();
             }
+            if (player.health == 0)
+            {
+                sf::Text text_lose;
 
+                text_lose.setFont(font);
+                text_lose.setString("YOU LOST!\nSCORE: " + std::to_string(player.score));
+                text_lose.setCharacterSize(64);
+                text_lose.setPosition(750, 400);
+                text_lose.setFillColor(sf::Color::Red);
+                text_lose.setStyle(sf::Text::Bold);
+                window.clear();
+                window.draw(text_lose);
+                window.display();
+                Sleep(3000);
+                player.score = 0;
+                player.health = 5;
+                MAX_ENEMIES = 4;
+                main_menu.setPlayButton0();
+            }
             window.display();
     }
     

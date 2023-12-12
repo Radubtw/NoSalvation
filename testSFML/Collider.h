@@ -12,6 +12,11 @@ public:
         body.move(dx, dy);
     }
 
+    void setCoords(sf::Vector2f coords)
+    {
+        body.setPosition(coords);
+    }
+
     bool CheckCollision(Collider& other, float push) {
         sf::Vector2f otherPosition = other.GetPosition();
         sf::Vector2f otherHalfSize = other.GetHalfSize();
@@ -64,7 +69,7 @@ public:
 
     sf::Vector2f GetHalfSize() const {
         sf::FloatRect rect = body.getLocalBounds();
-        return sf::Vector2f(rect.width / 2.0f, rect.height / 2.0f);
+        return sf::Vector2f(rect.width / 2.0f, rect.height / 1.67f);
     }
 
     sf::RectangleShape GetDebugShape() const {

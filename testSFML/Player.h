@@ -8,7 +8,6 @@
 #include "Platform.h"
 
 
-
 class Player
 {
 private:
@@ -21,6 +20,7 @@ private:
 	bool facing_right;
 public:
 	int score;
+	int health;
 
 
 public:

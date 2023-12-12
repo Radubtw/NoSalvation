@@ -2,19 +2,20 @@
 
 Player::Player() : collider(rectangle)
 {
-	coords.x = 400.f;
+	coords.x = 600.f;
 	coords.y = 500.f;
 	x_velocity = 0.0f;
 	y_velocity = 0.0f;
     score = 0;
+    health = 5;
     facing_right = 0;
-    rectangle.setSize(sf::Vector2f(180.0f, 160.0f));
+    rectangle.setSize(sf::Vector2f(160.0f, 184.0));
 	rectangle.setPosition(coords);
 	rectangle.setFillColor(sf::Color::White);
     rectangle.setOrigin(rectangle.getSize().x / 2.0f, rectangle.getSize().y / 2.0f);
 
-    rectangle.setScale(1.2, 1.2);
-    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player3.png"))
+    rectangle.setScale(1.0, 1.0);
+    if (!texture.loadFromFile("C:\\Users\\Radu\\source\\repos\\testSFML\\x64\\Debug\\player3v2.png"))
     {
         std::cout << "Failed to load from file!";
     }
@@ -24,6 +25,7 @@ Player::Player() : collider(rectangle)
 }
 
  Player::Player(sf::Vector2f position): y_velocity(0.0f), x_velocity(0.0f), coords(position), rectangle(sf::Vector2f(50.0f, 50.0f)), collider(rectangle) {
+        facing_right = 0;
         rectangle.setPosition(position);
         rectangle.setFillColor(sf::Color::Green);
         score = 0;
@@ -83,12 +85,12 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
     if (x_velocity > 0.0f)
     {
         facing_right = 1;
-        rectangle.setScale(-1.2f, 1.2f);
+        rectangle.setScale(-1.0f, 1.0f);
     }
     else if(x_velocity < 0.0f)
     {
         facing_right = 0;
-        rectangle.setScale(1.2f, 1.2f);
+        rectangle.setScale(1.0f, 1.0f);
     }
     y_velocity += 10.0f * deltaTime; 
     coords.x += x_velocity * deltaTime; 
@@ -104,6 +106,19 @@ void Player::update(bool& onGround, const std::vector<Platform>& platforms, floa
             coords.y = platformCollider.GetPosition().y - collider.GetHalfSize().y ;
         }
     }
+    coords.x = collider.GetPosition().x;
+    coords.y = collider.GetPosition().y;
+    std::cout << "PLayer position: " << coords.x << " " << coords.y << std::endl;
+    std::cout <<"collider position "<< collider.GetPosition().x << " " << collider.GetPosition().y << std::endl;
+
+    /*for ( auto& enemy : enemies) {
+         Collider& enemyCollider = enemy.getCollider();
+        if (collider.CheckCollision(enemyCollider, 0.0f)) {
+            onGround = true;
+            y_velocity = 0.0f;
+            coords.y = enemyCollider.GetPosition().y - collider.GetHalfSize().y;
+        }
+    }*/
 }
 
 bool Player::getFacingRight()
